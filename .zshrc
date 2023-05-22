@@ -70,7 +70,11 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git gh)
+plugins=(
+    git
+    gh
+    tmux
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -101,7 +105,8 @@ eval "$(zoxide init zsh)"
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-#
+#EDITOR
+export EDITOR='nvim'
 
 # bun completions
 [ -s "/home/sirian/.bun/_bun" ] && source "/home/sirian/.bun/_bun"
@@ -127,3 +132,4 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 
 # Created by `pipx` on 2023-01-31 23:05:49
 export PATH="$PATH:/home/sirian/.local/bin"
+
