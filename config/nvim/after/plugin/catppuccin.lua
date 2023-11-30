@@ -1,10 +1,10 @@
 local catppuccin = require("catppuccin");
 
 catppuccin.setup({
-    flavour = "mocha",
+    flavour = "macchiato",
     background = {
         light = "latte",
-        dark = "mocha"
+        dark = "macchiato"
     },
     transparent_background = true,
     styles = {
@@ -20,4 +20,3 @@ catppuccin.setup({
 })
 
 vim.cmd.colorscheme "catppuccin"
-
