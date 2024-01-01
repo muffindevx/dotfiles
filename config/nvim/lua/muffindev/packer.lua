@@ -1,4 +1,15 @@
-vim.cmd [[packadd packer.nvim]]
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
+
+local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
   -- Packer can manage itself
@@ -15,25 +26,32 @@ return require('packer').startup(function(use)
           return vim.fn.executable 'make' == 1
         end
       },
-      { "kdheepak/lazygit.nvim" }
+      { "kdheepak/lazygit.nvim" },
+      { 'nvim-telescope/telescope-ui-select.nvim' }
     },
     config = function()
       require("telescope").load_extension("lazygit")
+      require("telescope").load_extension("ui-select")
     end,
+  }
+
+  use {
+    'ThePrimeagen/harpoon',
+    branch = "harpoon2"
   }
 
   -- color theme
   use('catppuccin/nvim', { name = 'catppuccin' })
-
   use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
   use('nvim-treesitter/playground')
-  use('ThePrimeagen/harpoon')
   use('mbbill/undotree')
   use('lukas-reineke/indent-blankline.nvim', { main = "ibl" })
   use('akinsho/toggleterm.nvim', { tag = '*' })
   use('windwp/nvim-autopairs')
   use('lewis6991/gitsigns.nvim')
   use('numToStr/Comment.nvim')
+
+  use { "nvimtools/none-ls.nvim"}
 
   use {
     'nvim-lualine/lualine.nvim',
@@ -56,15 +74,16 @@ return require('packer').startup(function(use)
       { 'hrsh7th/cmp-path',                 after = 'nvim-cmp' }, -- Optional
       { 'hrsh7th/cmp-nvim-lua' },                                 -- Optional
       { 'saadparwaiz1/cmp_luasnip' },                             -- Optional
-
       -- Snippets
       { 'L3MON4D3/LuaSnip' },             -- Required
-      { 'rafamadriz/friendly-snippets' }, -- Optional
-      { 'j-hui/fidget.nvim'}
+      { 'rafamadriz/friendly-snippets', config = function ()
+        require("luasnip.loaders.from_vscode").lazy_load()
+      end }, -- Optional
+
+      { 'j-hui/fidget.nvim' }
     }
   }
 
-  use("ThePrimeagen/vim-be-good")
   use {
     "folke/trouble.nvim",
     dependecies = { "nvim-tree/nvim-web-devicons" }
@@ -78,4 +97,7 @@ return require('packer').startup(function(use)
   use 'rcarriga/nvim-dap-ui'
   use 'nvim-telescope/telescope-dap.nvim'
 
+  if packer_bootstrap then
+    require('packer').sync()
+  end
 end)

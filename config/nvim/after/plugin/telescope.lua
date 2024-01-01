@@ -16,6 +16,11 @@ telescope.setup({
         ["<c-t>"] = trouble.open_with_trouble
       }
     }
+  },
+  extensions = {
+    ["ui-select"] = {
+      themes.get_dropdown {}
+    }
   }
 })
 
