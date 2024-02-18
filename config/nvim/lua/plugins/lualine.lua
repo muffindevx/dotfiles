@@ -9,6 +9,19 @@ return {
     lualine.setup({
       options = {
         theme = "catppuccin"
+      }, {
+        sections = {
+          lualine_c = {
+            'filename',
+            file_status = true,
+            newfile_status = true,
+            path = 4,
+            symbols = {
+              modified = '[+]',
+              readonly = '[-]'
+            }
+          }
+        }
       }
     })
   end

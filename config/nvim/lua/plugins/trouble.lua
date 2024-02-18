@@ -4,13 +4,16 @@ return {
     'nvim-tree/nvim-web-devicons'
   },
   config = function()
-    vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>", { desc = "Open  Trouble" })
-    vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
-      { desc = "Show list of troubles for workspace" })
-    vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>",
-      { desc = "Show list of troubles in the current document" })
-    vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>", { desc = "Show troubles in current buffer" })
-    vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", { desc = "Show quick fix options" })
-    vim.keymap.set("n", "<leader>xr", "<cmd>TroubleToggle lsp_references<cr>", { desc = "Show definitions of the word" })
+    local trouble = require("trouble")
+
+    vim.keymap.set("n", "<leader>tt", function()
+      trouble.toggle()
+    end)
+    vim.keymap.set("n", "<leader>tp", function()
+      trouble.previous({ skip_groups = true, jump = true })
+    end)
+    vim.keymap.set("n", "<leader>tn", function()
+      trouble.next({ skip_groups = true, jump = true })
+    end)
   end
 }
